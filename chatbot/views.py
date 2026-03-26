@@ -17,6 +17,7 @@ def chat(request):
     try:
         data = json.loads(request.body)
         message = data.get("message", "").strip()
+        history = data.get("history", [])
 
         if not message:
             return JsonResponse({"error": "Message vide"}, status=400)
@@ -25,12 +26,30 @@ def chat(request):
 
         client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "Tu es un assistant expert en assurance. "
+                    "Réponds en français, de façon claire, utile et concise. "
+                    "Quand une information dépend du contrat, précise qu'il faut vérifier les garanties exactes."
+                ),
+            }
+        ]
+
+        # On garde seulement les derniers échanges pour éviter des requêtes trop lourdes
+        for item in history[-10:]:
+            role = item.get("role")
+            content = item.get("content", "").strip()
+            if role in ["user", "assistant"] and content:
+                messages.append({"role": role, "content": content})
+
+        messages.append({"role": "user", "content": message})
+
         response = client.chat.completions.create(
             model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": "Tu es un expert en assurance."},
-                {"role": "user", "content": message},
-            ],
+            messages=messages,
+            temperature=0.4,
         )
 
         answer = response.choices[0].message.content
