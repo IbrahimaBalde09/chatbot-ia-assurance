@@ -1,15 +1,14 @@
 import os
-from django.http import JsonResponse, HttpResponse
-from django.views.decorators.csrf import csrf_exempt
 import json
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 
 
-# Page d'accueil (test Railway OK)
 def home(request):
-    return HttpResponse("Chatbot IA Assurance en ligne ✅")
+    return render(request, "chatbot/index.html")
 
 
-# Endpoint chatbot
 @csrf_exempt
 def chat(request):
     if request.method != "POST":
@@ -17,12 +16,11 @@ def chat(request):
 
     try:
         data = json.loads(request.body)
-        message = data.get("message", "")
+        message = data.get("message", "").strip()
 
         if not message:
             return JsonResponse({"error": "Message vide"}, status=400)
 
-        # 🔥 Import OpenAI ici (important pour éviter crash au démarrage)
         from openai import OpenAI
 
         client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
@@ -31,12 +29,11 @@ def chat(request):
             model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "Tu es un expert en assurance."},
-                {"role": "user", "content": message}
-            ]
+                {"role": "user", "content": message},
+            ],
         )
 
         answer = response.choices[0].message.content
-
         return JsonResponse({"response": answer})
 
     except Exception as e:
