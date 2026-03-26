@@ -3,3 +3,5 @@ gunicorn
 whitenoise
 openai
 python-dotenv
+psycopg[binary]
+dj-database-url

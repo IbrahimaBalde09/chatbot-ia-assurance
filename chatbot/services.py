@@ -1,7 +1,8 @@
-from rag.rag_pipeline import RAGPipeline
+_pipeline = None
 
-pipeline = RAGPipeline()
-
-
-def get_chatbot_response(question: str) -> dict:
-    return pipeline.run(question)
+def get_chatbot_response(message):
+    global _pipeline
+    if _pipeline is None:
+        from rag.rag_pipeline import RAGPipeline
+        _pipeline = RAGPipeline()
+    return _pipeline.run(message)
