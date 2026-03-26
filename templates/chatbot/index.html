@@ -1,132 +1,504 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chatbot IA Assurance</title>
 
   <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background: #343541;
-      color: #fff;
+    :root {
+      --bg-1: #061a1d;
+      --bg-2: #0b2c31;
+      --panel: rgba(10, 30, 34, 0.72);
+      --panel-strong: rgba(8, 24, 27, 0.92);
+      --border: rgba(122, 245, 222, 0.16);
+      --text: #ecfffc;
+      --muted: #a6d7d0;
+      --primary: #26d9c4;
+      --primary-2: #6ff3e2;
+      --primary-dark: #11b8a5;
+      --bot: rgba(25, 71, 77, 0.78);
+      --user: linear-gradient(135deg, #18c7b3, #39efd2);
+      --danger: #ff7b7b;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
     }
 
-    .app {
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(61, 255, 223, 0.20), transparent 28%),
+        radial-gradient(circle at top right, rgba(0, 195, 255, 0.12), transparent 22%),
+        radial-gradient(circle at bottom center, rgba(38, 217, 196, 0.12), transparent 26%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      overflow: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    body::before {
+      top: -80px;
+      left: -60px;
+      background: rgba(38, 217, 196, 0.18);
+    }
+
+    body::after {
+      right: -80px;
+      bottom: -100px;
+      background: rgba(111, 243, 226, 0.14);
+    }
+
+    .layout {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      height: 100vh;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 22px;
       display: flex;
       flex-direction: column;
-      height: 100vh;
+      justify-content: space-between;
     }
 
-    .header {
-      padding: 15px 20px;
-      text-align: center;
-      background: #202123;
-      font-weight: bold;
-      font-size: 18px;
-      position: relative;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .brand-badge {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(38, 217, 196, 0.24), rgba(111, 243, 226, 0.12));
+      border: 1px solid rgba(111, 243, 226, 0.24);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .panel-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(122, 245, 222, 0.10);
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+
+    .panel-card h2 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      color: var(--primary-2);
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .panel-card p,
+    .panel-card li {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .panel-card ul {
+      padding-left: 18px;
+      margin: 0;
     }
 
     .reset-btn {
-      position: absolute;
-      right: 16px;
-      top: 10px;
-      background: #555;
-      color: white;
+      width: 100%;
       border: none;
-      border-radius: 8px;
-      padding: 8px 12px;
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: linear-gradient(135deg, rgba(38, 217, 196, 0.16), rgba(111, 243, 226, 0.08));
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 600;
       cursor: pointer;
+      border: 1px solid rgba(111, 243, 226, 0.18);
+      transition: 0.2s ease;
     }
 
     .reset-btn:hover {
-      background: #666;
+      transform: translateY(-1px);
+      background: linear-gradient(135deg, rgba(38, 217, 196, 0.26), rgba(111, 243, 226, 0.12));
+    }
+
+    .main {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .topbar {
+      padding: 22px 26px 18px;
+      border-bottom: 1px solid rgba(122, 245, 222, 0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .topbar-left h2 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .topbar-left p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(38, 217, 196, 0.08);
+      border: 1px solid rgba(111, 243, 226, 0.18);
+      color: var(--primary-2);
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 12px rgba(38, 217, 196, 0.9);
     }
 
     #chat-box {
       flex: 1;
       overflow-y: auto;
-      padding: 20px;
+      padding: 28px 24px 18px;
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 16px;
+      scroll-behavior: smooth;
     }
 
-    .message {
-      max-width: 75%;
-      padding: 12px 16px;
-      border-radius: 12px;
-      line-height: 1.6;
+    #chat-box::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    #chat-box::-webkit-scrollbar-thumb {
+      background: rgba(111, 243, 226, 0.18);
+      border-radius: 999px;
+    }
+
+    .row {
+      display: flex;
+      width: 100%;
+    }
+
+    .row.user {
+      justify-content: flex-end;
+    }
+
+    .row.bot {
+      justify-content: flex-start;
+    }
+
+    .message-wrap {
+      max-width: min(78%, 760px);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .meta {
+      font-size: 12px;
+      color: var(--muted);
+      padding: 0 6px;
+    }
+
+    .bubble {
+      padding: 16px 18px;
+      border-radius: 22px;
+      line-height: 1.7;
       font-size: 15px;
       white-space: pre-wrap;
+      word-break: break-word;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.14);
+      animation: fadeUp 0.28s ease;
     }
 
-    .user {
-      align-self: flex-end;
-      background: #0b5ed7;
+    .row.bot .bubble {
+      background: var(--bot);
+      border: 1px solid rgba(111, 243, 226, 0.08);
+      border-top-left-radius: 8px;
+      color: #efffff;
     }
 
-    .bot {
-      align-self: flex-start;
-      background: #444654;
-    }
-
-    .input-container {
-      display: flex;
-      padding: 15px;
-      background: #40414f;
-      gap: 10px;
-    }
-
-    input {
-      flex: 1;
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      font-size: 16px;
-      outline: none;
-    }
-
-    button.send-btn {
-      padding: 12px 18px;
-      border: none;
-      background: #19c37d;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    button.send-btn:hover {
-      background: #16a268;
+    .row.user .bubble {
+      background: var(--user);
+      color: #032624;
+      font-weight: 500;
+      border-top-right-radius: 8px;
     }
 
     .typing {
+      opacity: 0.82;
       font-style: italic;
-      opacity: 0.75;
+    }
+
+    .composer {
+      padding: 18px 20px 20px;
+      border-top: 1px solid rgba(122, 245, 222, 0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.03));
+    }
+
+    .composer-shell {
+      display: flex;
+      align-items: end;
+      gap: 14px;
+      padding: 14px;
+      border-radius: 24px;
+      background: var(--panel-strong);
+      border: 1px solid rgba(111, 243, 226, 0.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .composer textarea {
+      flex: 1;
+      min-height: 24px;
+      max-height: 180px;
+      resize: none;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
+      font-family: inherit;
+      padding: 8px 6px;
+    }
+
+    .composer textarea::placeholder {
+      color: #8cbab4;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .send-btn {
+      border: none;
+      min-width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: #032624;
+      font-size: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(38, 217, 196, 0.28);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .send-btn:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 16px 30px rgba(38, 217, 196, 0.34);
+    }
+
+    .send-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .composer-note {
+      margin-top: 10px;
+      padding: 0 6px;
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 980px) {
+      .layout {
+        grid-template-columns: 1fr;
+        padding: 12px;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        border-radius: 24px;
+      }
+
+      .topbar {
+        padding: 18px 18px 14px;
+      }
+
+      #chat-box {
+        padding: 20px 14px 14px;
+      }
+
+      .composer {
+        padding: 14px;
+      }
+
+      .message-wrap {
+        max-width: 90%;
+      }
+
+      .topbar-left h2 {
+        font-size: 20px;
+      }
+
+      .status {
+        display: none;
+      }
     }
   </style>
 </head>
-
 <body>
-  <div class="app">
-    <div class="header">
-      🤖 Chatbot IA Assurance
-      <button class="reset-btn" onclick="resetConversation()">Réinitialiser</button>
-    </div>
+  <div class="layout">
+    <aside class="sidebar">
+      <div>
+        <div class="brand">
+          <div class="brand-badge">💎</div>
+          <div>
+            <h1>AssurBot Premium</h1>
+            <p>Assistant intelligent dédié à l’assurance</p>
+          </div>
+        </div>
 
-    <div id="chat-box"></div>
+        <div class="panel-card">
+          <h2>Ce que je peux faire</h2>
+          <ul>
+            <li>Expliquer les garanties et exclusions</li>
+            <li>Aider sur auto, habitation, santé, RC</li>
+            <li>Répondre de façon claire et structurée</li>
+          </ul>
+        </div>
 
-    <div class="input-container">
-      <input id="input" placeholder="Écrivez votre message..." />
-      <button class="send-btn" onclick="sendMessage()">Envoyer</button>
-    </div>
+        <div class="panel-card">
+          <h2>Conseil</h2>
+          <p>
+            Décris ton besoin avec quelques détails : type de contrat, sinistre,
+            remboursement, franchise, ou garanties recherchées.
+          </p>
+        </div>
+      </div>
+
+      <button class="reset-btn" onclick="resetConversation()">↺ Réinitialiser la conversation</button>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="topbar-left">
+          <h2>Chatbot IA Assurance</h2>
+          <p>Une expérience fluide, premium et pensée pour l’assistance client.</p>
+        </div>
+        <div class="status">
+          <span class="status-dot"></span>
+          Assistant disponible
+        </div>
+      </div>
+
+      <div id="chat-box"></div>
+
+      <div class="composer">
+        <div class="composer-shell">
+          <textarea id="input" rows="1" placeholder="Posez votre question sur l’assurance..."></textarea>
+
+          <div class="actions">
+            <button class="send-btn" id="send-btn" onclick="sendMessage()">➜</button>
+          </div>
+        </div>
+
+        <div class="composer-note">
+          <span>Réponses assistées par IA</span>
+          <span>Thème premium turquoise</span>
+        </div>
+      </div>
+    </main>
   </div>
 
   <script>
     const chatBox = document.getElementById("chat-box");
     const input = document.getElementById("input");
+    const sendBtn = document.getElementById("send-btn");
     const STORAGE_KEY = "chatbot_assurance_history";
 
     function getHistory() {
@@ -141,12 +513,37 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
     }
 
+    function escapeText(text) {
+      return text ?? "";
+    }
+
+    function createMessageRow(text, type) {
+      const row = document.createElement("div");
+      row.className = "row " + type;
+
+      const wrap = document.createElement("div");
+      wrap.className = "message-wrap";
+
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      meta.textContent = type === "user" ? "Vous" : "Assistant";
+
+      const bubble = document.createElement("div");
+      bubble.className = "bubble";
+      bubble.innerText = escapeText(text);
+
+      wrap.appendChild(meta);
+      wrap.appendChild(bubble);
+      row.appendChild(wrap);
+
+      return row;
+    }
+
     function addMessage(text, type) {
-      const div = document.createElement("div");
-      div.className = "message " + type;
-      div.innerText = text;
-      chatBox.appendChild(div);
+      const row = createMessageRow(text, type);
+      chatBox.appendChild(row);
       chatBox.scrollTop = chatBox.scrollHeight;
+      return row;
     }
 
     function renderHistory() {
@@ -154,7 +551,10 @@
       const history = getHistory();
 
       if (history.length === 0) {
-        addMessage("Bonjour 👋 Je suis votre assistant assurance. Posez votre question.", "bot");
+        addMessage(
+          "Bonjour 👋 Je suis votre assistant assurance. Je peux vous aider à comprendre un contrat, une garantie, une franchise ou une situation de sinistre.",
+          "bot"
+        );
         return;
       }
 
@@ -166,24 +566,30 @@
     function resetConversation() {
       localStorage.removeItem(STORAGE_KEY);
       renderHistory();
+      input.focus();
+    }
+
+    function autoResizeTextarea() {
+      input.style.height = "auto";
+      input.style.height = Math.min(input.scrollHeight, 180) + "px";
     }
 
     async function sendMessage() {
       const message = input.value.trim();
       if (!message) return;
 
+      sendBtn.disabled = true;
+
       const history = getHistory();
       addMessage(message, "user");
       input.value = "";
+      autoResizeTextarea();
 
       const updatedHistory = [...history, { role: "user", content: message }];
       saveHistory(updatedHistory);
 
-      const typing = document.createElement("div");
-      typing.className = "message bot typing";
-      typing.innerText = "Le chatbot réfléchit...";
-      chatBox.appendChild(typing);
-      chatBox.scrollTop = chatBox.scrollHeight;
+      const typingRow = addMessage("L’assistant analyse votre demande…", "bot");
+      typingRow.querySelector(".bubble").classList.add("typing");
 
       try {
         const res = await fetch("/api/chat/", {
@@ -198,28 +604,36 @@
         });
 
         const data = await res.json();
-        typing.remove();
+        typingRow.remove();
 
-        const botText = data.response || data.error || "Erreur inconnue";
+        const botText = data.response || data.error || "Erreur inconnue.";
         addMessage(botText, "bot");
 
         const finalHistory = [...updatedHistory, { role: "assistant", content: botText }];
         saveHistory(finalHistory);
-
       } catch (err) {
-        typing.remove();
-        const botText = "Erreur serveur ❌";
+        typingRow.remove();
+        const botText = "Une erreur de connexion est survenue.";
         addMessage(botText, "bot");
         const finalHistory = [...updatedHistory, { role: "assistant", content: botText }];
         saveHistory(finalHistory);
+      } finally {
+        sendBtn.disabled = false;
+        input.focus();
       }
     }
 
-    input.addEventListener("keypress", function(e) {
-      if (e.key === "Enter") sendMessage();
+    input.addEventListener("input", autoResizeTextarea);
+
+    input.addEventListener("keydown", function(e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
     });
 
     renderHistory();
+    autoResizeTextarea();
   </script>
 </body>
 </html>
