@@ -1,0 +1,86 @@
+[
+  {
+    "source": "assurance_auto.txt",
+    "chunk_id": 0,
+    "domain": "auto",
+    "text": "L'assurance auto couvre les risques liés à l'utilisation d'un véhicule.\n\nLa garantie responsabilité civile est obligatoire. Elle couvre les dommages causés à des tiers.\n\nSelon le contrat, des garanties complémentaires peuvent être prévues : dommages tous accidents, vol, incendie, bris de glace, assistance et protection du conducteur.\n\nEn cas d'accident, l'assuré doit généralement déclarer le sinistre dans un délai de cinq jours ouvrés, sauf disposition différente prévue au contrat.\n\nLe montant d"
+  },
+  {
+    "source": "assurance_auto.txt",
+    "chunk_id": 1,
+    "domain": "auto",
+    "text": "cinq jours ouvrés, sauf disposition différente prévue au contrat.\n\nLe montant du remboursement dépend des garanties souscrites, de la franchise, de la vétusté éventuelle du véhicule et des exclusions prévues au contrat."
+  },
+  {
+    "source": "assurance_habitation.txt",
+    "chunk_id": 0,
+    "domain": "habitation",
+    "text": "L'assurance habitation protège le logement et les biens de l'assuré contre différents risques.\n\nLes garanties les plus courantes sont l'incendie, le dégât des eaux, le vol, le vandalisme, la responsabilité civile et parfois les catastrophes naturelles.\n\nLe locataire doit généralement être assuré pour les risques locatifs. Le propriétaire peut souscrire une assurance habitation selon son statut : occupant, non occupant ou bailleur.\n\nEn cas de sinistre, l'assuré doit déclarer l'événement dans les"
+  },
+  {
+    "source": "assurance_habitation.txt",
+    "chunk_id": 1,
+    "domain": "habitation",
+    "text": "t ou bailleur.\n\nEn cas de sinistre, l'assuré doit déclarer l'événement dans les délais prévus au contrat et fournir les justificatifs nécessaires.\n\nLe remboursement dépend des garanties, des plafonds, de la franchise et des exclusions."
+  },
+  {
+    "source": "assurance_sante.txt",
+    "chunk_id": 0,
+    "domain": "sante",
+    "text": "L'assurance santé ou complémentaire santé prend en charge tout ou partie des frais médicaux non remboursés par le régime obligatoire.\n\nLe remboursement dépend du contrat, du niveau de garantie, du type de soin et des plafonds prévus.\n\nLes postes les plus fréquents sont les consultations, médicaments, hospitalisation, optique et dentaire.\n\nLe tiers payant peut éviter l'avance de frais dans certains cas.\n\nEn cas d'arrêt maladie, les indemnités journalières relèvent du régime obligatoire et peuvent"
+  },
+  {
+    "source": "assurance_sante.txt",
+    "chunk_id": 1,
+    "domain": "sante",
+    "text": "t maladie, les indemnités journalières relèvent du régime obligatoire et peuvent être complétées par un contrat de prévoyance selon les garanties souscrites."
+  },
+  {
+    "source": "banque_immobilier.txt",
+    "chunk_id": 0,
+    "domain": "banque_immobilier",
+    "text": "Dans le domaine banque et immobilier, certaines assurances sont liées aux crédits, aux moyens de paiement ou aux biens financés.\n\nL'assurance emprunteur couvre généralement les risques de décès, invalidité, incapacité et parfois perte d'emploi selon le contrat souscrit.\n\nPour un prêt immobilier, l'assurance emprunteur est souvent exigée par la banque.\n\nEn cas de sinistre affectant un bien immobilier, l'assurance habitation ou l'assurance propriétaire non occupant peut intervenir selon la situati"
+  },
+  {
+    "source": "banque_immobilier.txt",
+    "chunk_id": 1,
+    "domain": "banque_immobilier",
+    "text": "tation ou l'assurance propriétaire non occupant peut intervenir selon la situation.\n\nEn matière bancaire, certaines cartes incluent des garanties ou assurances, mais leur mise en œuvre dépend des conditions du contrat, du type de carte et de la nature du sinistre."
+  },
+  {
+    "source": "declaration_sinistre.txt",
+    "chunk_id": 0,
+    "domain": "general",
+    "text": "En cas de sinistre automobile, l'assuré doit déclarer l'événement à son assureur dans un délai généralement de cinq jours ouvrés.\nLa déclaration doit contenir la date, le lieu, les circonstances et les éventuels dommages constatés.\nDes justificatifs peuvent être demandés."
+  },
+  {
+    "source": "faq_assurance.txt",
+    "chunk_id": 0,
+    "domain": "general",
+    "text": "L'assurance auto couvre différents types de risques selon le contrat souscrit.\nUn assuré peut bénéficier d'une garantie responsabilité civile, d'une garantie tous risques ou d'options complémentaires.\nLa responsabilité civile est obligatoire pour circuler avec un véhicule."
+  },
+  {
+    "source": "garanties_auto.txt",
+    "chunk_id": 0,
+    "domain": "auto",
+    "text": "La garantie tous risques couvre les dommages subis par le véhicule de l'assuré, même en cas de responsabilité.\nLa garantie au tiers couvre uniquement les dommages causés à autrui.\nDes options comme le bris de glace, le vol ou l'incendie peuvent être ajoutées."
+  },
+  {
+    "source": "remboursements_sante.txt",
+    "chunk_id": 0,
+    "domain": "sante",
+    "text": "Les remboursements en assurance santé dépendent du contrat souscrit, du niveau de garantie et de la nature des soins.\n\nEn général, l'assuré avance ou non les frais selon qu'il bénéficie du tiers payant. Lorsque les frais sont avancés, le remboursement intervient après transmission des justificatifs ou après traitement par l'Assurance Maladie et la complémentaire santé.\n\nLe remboursement peut concerner les consultations médicales, les médicaments, l'hospitalisation, l'optique ou le dentaire selon"
+  },
+  {
+    "source": "remboursements_sante.txt",
+    "chunk_id": 1,
+    "domain": "sante",
+    "text": "ns médicales, les médicaments, l'hospitalisation, l'optique ou le dentaire selon les garanties prévues au contrat.\n\nLe délai de remboursement varie selon l'organisme assureur, la complétude du dossier et le type d'acte remboursé.\n\nEn cas d'arrêt maladie, l'assuré peut percevoir des indemnités journalières selon son régime obligatoire et, dans certains contrats, un complément prévu par une garantie de prévoyance.\n\nPour obtenir un remboursement, l'assuré doit généralement fournir les pièces justif"
+  },
+  {
+    "source": "remboursements_sante.txt",
+    "chunk_id": 2,
+    "domain": "sante",
+    "text": "r obtenir un remboursement, l'assuré doit généralement fournir les pièces justificatives nécessaires et vérifier les plafonds, exclusions et délais de carence prévus au contrat.cd"
+  }
+]
