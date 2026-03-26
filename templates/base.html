@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AssurBot • Assistant IA Assurance{% endblock %}</title>
+    <meta name="description" content="AssurBot, assistant IA premium pour l’assurance auto, santé, habitation, banque et immobilier.">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script defer src="{% static 'js/app.js' %}"></script>
+</head>
+<body>
+    <div class="page-background">
+        <div class="bg-orb orb-1"></div>
+        <div class="bg-orb orb-2"></div>
+        <div class="bg-orb orb-3"></div>
+    </div>
+
+    {% block content %}{% endblock %}
+</body>
+</html>

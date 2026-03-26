@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}Chatbot IA Assurance{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+    <aside class="sidebar">
+        <div>
+            <div class="brand">🛡️ AssurBot</div>
+            <p class="sidebar-subtitle">Assistant IA assurance</p>
+
+            <div class="sidebar-actions">
+                <a href="{% url 'clear_chat' %}" class="btn btn-secondary">Nouvelle conversation</a>
+            </div>
+
+            <div class="conversation-list">
+                {% for conv in conversations %}
+                    <a
+                        href="/?conversation={{ conv.id }}"
+                        class="conversation-item {% if current_conversation and conv.id == current_conversation.id %}active{% endif %}"
+                    >
+                        {{ conv.title }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="sidebar-footer">
+            <p>RAG + Django + OpenAI</p>
+        </div>
+    </aside>
+
+    <main class="chat-layout">
+        <header class="chat-header">
+            <div class="header-card">
+                <h1>Chatbot IA Assurance</h1>
+                <p>Pose une question sur les garanties, les sinistres et les démarches d’assurance.</p>
+            </div>
+        </header>
+
+        <section class="chat-container" id="chat-container">
+            {% if not chat_history %}
+                <div class="welcome-card fade-in">
+                    <h2>Bonjour 👋</h2>
+                    <p>
+                        Je peux t’aider sur les garanties auto, la déclaration de sinistre,
+                        les remboursements et les démarches d’assurance.
+                    </p>
+
+                    <div class="suggestions">
+                        <form method="post" class="suggestion-form">
+                            {% csrf_token %}
+                            {% if current_conversation %}
+                                <input type="hidden" name="conversation_id" value="{{ current_conversation.id }}">
+                            {% endif %}
+                            <input type="hidden" name="question" value="Ma voiture a eu un accident, que dois-je faire ?">
+                            <button type="submit" class="suggestion-chip">Accident de voiture</button>
+                        </form>
+
+                        <form method="post" class="suggestion-form">
+                            {% csrf_token %}
+                            {% if current_conversation %}
+                                <input type="hidden" name="conversation_id" value="{{ current_conversation.id }}">
+                            {% endif %}
+                            <input type="hidden" name="question" value="Que couvre la garantie tous risques ?">
+                            <button type="submit" class="suggestion-chip">Garantie tous risques</button>
+                        </form>
+
+                        <form method="post" class="suggestion-form">
+                            {% csrf_token %}
+                            {% if current_conversation %}
+                                <input type="hidden" name="conversation_id" value="{{ current_conversation.id }}">
+                            {% endif %}
+                            <input type="hidden" name="question" value="Dans quel délai faut-il déclarer un sinistre ?">
+                            <button type="submit" class="suggestion-chip">Déclarer un sinistre</button>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% for message in chat_history %}
+                {% if message.role == "user" %}
+                    <div class="message-row user-row fade-in-up">
+                        <div class="message user-message">
+                            {{ message.content }}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="message-row assistant-row fade-in-up">
+                        <div class="assistant-avatar">IA</div>
+                        <div class="message-block">
+                            <div class="message assistant-message">
+                                {{ message.content|linebreaks }}
+                            </div>
+
+                            {% if message.sources %}
+                                <details class="sources-box">
+                                    <summary>Voir les sources utilisées</summary>
+                                    <div class="sources-list">
+                                        {% for source in message.sources %}
+                                            <div class="source-item">
+                                                <div class="source-title">{{ source.source }}</div>
+                                                <div class="source-content">{{ source.text }}</div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </details>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <div id="loader" class="typing-indicator hidden">
+                <div class="assistant-avatar">IA</div>
+                <div class="typing-bubble">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </section>
+
+        <footer class="chat-input-area">
+            <form method="post" id="chat-form" class="chat-form">
+                {% csrf_token %}
+                {% if current_conversation %}
+                    <input type="hidden" name="conversation_id" value="{{ current_conversation.id }}">
+                {% endif %}
+                <div class="input-wrapper">
+                    <input
+                        type="text"
+                        name="question"
+                        id="question-input"
+                        placeholder="Écris ta question ici..."
+                        autocomplete="off"
+                        required
+                    >
+                    <button type="submit" class="send-button">Envoyer</button>
+                </div>
+            </form>
+        </footer>
+    </main>
+</div>
+{% endblock %}

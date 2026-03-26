@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AssurBot - Chat IA Assurance</title>
+<link rel="stylesheet" href="{% static 'css/style.css' %}?v=40">
+</head>
+<body>
+
+<div class="app-shell">
+
+<aside class="sidebar">
+<div class="sidebar-top">
+<div class="brand-wrap">
+<div class="brand-icon">🛡️</div>
+<div>
+<div class="brand">AssurBot</div>
+<p class="sidebar-subtitle">Assistant IA assurance</p>
+</div>
+</div>
+
+<button class="new-chat-btn" onclick="clearChat()">+ Nouvelle conversation</button>
+
+<div class="sidebar-card">
+<p class="sidebar-card-title">Domaines couverts</p>
+<p class="sidebar-domains">
+Auto • Santé • Habitation<br>
+Banque / Immobilier
+</p>
+</div>
+
+<div class="history-section">
+<p class="history-title">Historique récent</p>
+<div id="history-list" class="history-list"></div>
+</div>
+</div>
+
+<div class="sidebar-bottom">
+<div class="sidebar-badge">RAG • Django • OpenAI</div>
+</div>
+</aside>
+
+<main class="main-content">
+<header class="hero">
+<div class="hero-badge">Assistant conversationnel premium</div>
+
+<h1 class="hero-title">
+<span class="hero-line hero-line-main">Des réponses fiables et instantanées</span>
+<span class="hero-line hero-line-accent">pour toutes vos démarches d’assurance</span>
+</h1>
+
+<p class="hero-description">
+Bénéficiez d’un accompagnement intelligent pour comprendre, comparer
+et gérer vos assurances en toute simplicité.
+</p>
+</header>
+
+<section class="chat-card">
+<div id="chat-box" class="chat-box">
+<div class="message-row bot-row">
+<div class="avatar bot-avatar">IA</div>
+<div class="message bot-message">
+👋 Bonjour ! Je peux t’aider sur l’assurance auto, santé,
+habitation, banque et immobilier.
+</div>
+</div>
+</div>
+
+<div class="input-bar">
+<div class="input-shell">
+<input
+id="user-input"
+type="text"
+placeholder="Écris ta question ici..."
+autocomplete="off"
+>
+</div>
+<button id="send-button" onclick="sendMessage()">Envoyer</button>
+</div>
+</section>
+</main>
+
+</div>
+
+<script src="{% static 'js/app.js' %}?v=30"></script>
+</body>
+</html>
